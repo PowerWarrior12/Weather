@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/drawable/border.xml" value="0.27735042735042736" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/drawable/ic_russia.xml" value="0.16452991452991453" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/drawable/ic_saint_33069.xml" value="0.16452991452991453" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/drawable/ic_track.xml" value="0.2417721518987342" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/drawable/televizor.xml" value="0.26282051282051283" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/layout-v28/weather_fragment.xml" value="0.30052083333333335" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/layout/activity_main.xml" value="0.29528985507246375" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/layout/cities_list_fragment.xml" value="0.22" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/layout/city_element.xml" value="0.5" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/layout/weather_element.xml" value="0.33" />
+        <entry key="..\:/Users/PowerWarrior/AndroidStudioProjects/Weather/app/src/main/res/layout/weather_fragment.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
