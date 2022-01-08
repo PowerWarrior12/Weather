@@ -10,6 +10,8 @@ import com.example.weather.ui.entities.WeatherViewEntity
 import java.lang.Exception
 import java.util.*
 
+private val TAG = WeatherRetrofitDataSource::class.java.simpleName
+
 class WeatherRetrofitDataSource(
     private val service : WeatherApi,
     private val weatherMapper : IEntityMapper<WeatherResponseEntity, List<WeatherViewEntity>>,

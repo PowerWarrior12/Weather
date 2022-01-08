@@ -1,6 +1,5 @@
 package com.example.weather.ui.interfaces
 
-import com.example.weather.ui.entities.CityViewEntity
 import com.example.weather.ui.entities.WeatherViewEntity
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
@@ -10,16 +9,20 @@ import moxy.viewstate.strategy.StateStrategyType
 /**
  * View interface for weather
 */
-@StateStrategyType(value = AddToEndSingleStrategy::class)
+@StateStrategyType(value = SkipStrategy::class)
 interface IWeatherView : MvpView {
+    @StateStrategyType(value = AddToEndSingleStrategy::class)
     fun updateData(weatherView : List<WeatherViewEntity>)
-    @StateStrategyType(value = SkipStrategy::class)
     fun showMessage(message : Int)
-    @StateStrategyType(value = SkipStrategy::class)
     fun showMessage(message : String)
-    @StateStrategyType(value = SkipStrategy::class)
     fun startCurrentWeatherService()
+    @StateStrategyType(value = AddToEndSingleStrategy::class)
     fun setCurrentCityButtonEnable(enable : Boolean)
-    @StateStrategyType(value = SkipStrategy::class)
     fun shareInformation(text : String)
+    @StateStrategyType(value = AddToEndSingleStrategy::class)
+    fun setCityName(cityName : String)
+    @StateStrategyType(value = AddToEndSingleStrategy::class)
+    fun startLaunch()
+    @StateStrategyType(value = AddToEndSingleStrategy::class)
+    fun endLaunch()
 }

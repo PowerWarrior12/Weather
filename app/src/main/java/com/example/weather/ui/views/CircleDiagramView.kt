@@ -7,11 +7,10 @@ import android.view.View
 import com.example.weather.R
 import kotlin.math.roundToInt
 import android.graphics.RectF
-
-
-
+import com.example.weather.ui.holders.CityViewHolder
 
 private const val MAX_TEXT_SIZE = 100
+private val TAG = CircleDiagramView::class.java.simpleName
 
 class CircleDiagramView @JvmOverloads constructor(
     context : Context,
@@ -19,6 +18,7 @@ class CircleDiagramView @JvmOverloads constructor(
 ) : View(context, attrs) {
 
     private val valuePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val value2Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val textRect = RectF()
     private var valueText = ""
@@ -47,9 +47,14 @@ class CircleDiagramView @JvmOverloads constructor(
             Color.BLUE
         )
 
+        val backColor = typedArray.getColor(
+            R.styleable.CircleDiagram_backColor,
+            Color.GREEN
+        )
+
         val value = typedArray.getInteger(
             R.styleable.CircleDiagram_value,
-            0
+            270
         )
 
         textPaint.apply {
@@ -59,6 +64,10 @@ class CircleDiagramView @JvmOverloads constructor(
 
         valuePaint.apply {
             color = valueColor
+        }
+
+        value2Paint.apply {
+            color = backColor
         }
 
         this.value = value
@@ -71,11 +80,19 @@ class CircleDiagramView @JvmOverloads constructor(
 
         val valueAngle = value / 100.0f * 360.0f
 
+        // Drawing value arc
         textRect.left = centreX - width/2
         textRect.right = centreX + width/2
         textRect.bottom = centreY + height/2
         textRect.top = centreY - height/2
         canvas?.drawArc(textRect, 0F, valueAngle, true, valuePaint)
+
+        // Drawing back arc
+        textRect.left = centreX - width/2.3F
+        textRect.right = centreX + width/2.3F
+        textRect.bottom = centreY + height/2.3F
+        textRect.top = centreY - height/2.3F
+        canvas?.drawArc(textRect, valueAngle, 360 - valueAngle, true, value2Paint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

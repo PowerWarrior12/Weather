@@ -8,6 +8,8 @@ import com.example.weather.ui.entities.WeatherViewEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+private val TAG = WeatherDBDataSource::class.java.simpleName
+
 class WeatherDBDataSource(
     private val db : WeatherDatabase,
     private val mapperTo : IEntityMapper<WeatherEntity, WeatherViewEntity>,

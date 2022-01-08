@@ -1,14 +1,17 @@
 package com.example.weather.ui.holders
 
+import android.annotation.SuppressLint
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
-import com.example.weather.ui.entities.CityViewEntity
+import com.example.weather.ui.adapters.WeatherAdapter
 import com.example.weather.ui.entities.WeatherViewEntity
 import com.example.weather.ui.views.CircleDiagramView
+
+private val TAG = WeatherViewHolder::class.java.simpleName
 
 class WeatherViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
@@ -19,34 +22,38 @@ class WeatherViewHolder(view : View) : RecyclerView.ViewHolder(view) {
     private val humidityTextView : TextView = itemView.findViewById(R.id.humidity_text)
     private val humidityView : CircleDiagramView = itemView.findViewById(R.id.humidity_diagram)
     private val shareButton : ImageButton = itemView.findViewById(R.id.share_button)
+    private lateinit var weatherViewEntity: WeatherViewEntity
 
+    @SuppressLint("SetTextI18n")
     fun bind(weatherViewEntity: WeatherViewEntity, callback : OnClickCallback){
-        minTemperatureTextView.text = weatherViewEntity.minTemperature.toString()
+        this.weatherViewEntity = weatherViewEntity
+
+        minTemperatureTextView.text = "${this.weatherViewEntity.minTemperature} K°"
         minTemperatureTextView.jumpDrawablesToCurrentState()
 
-        maxTemperatureTextView.text = weatherViewEntity.maxTemperature.toString()
+        maxTemperatureTextView.text = "${this.weatherViewEntity.maxTemperature} K°"
         maxTemperatureTextView.jumpDrawablesToCurrentState()
 
-        dateTextView.text = DateFormat.format("yyyy-MM-dd", weatherViewEntity.date)
+        dateTextView.text = DateFormat.format("yyyy-MM-dd", this.weatherViewEntity.date)
         dateTextView.jumpDrawablesToCurrentState()
 
-        pressureTextView.text = weatherViewEntity.pressure.toString()
+        pressureTextView.text = this.weatherViewEntity.pressure.toString()
         pressureTextView.jumpDrawablesToCurrentState()
 
-        humidityTextView.text = weatherViewEntity.humidity.toString()
+        humidityTextView.text = "${this.weatherViewEntity.humidity} %"
         humidityTextView.jumpDrawablesToCurrentState()
 
-        humidityView.value = weatherViewEntity.humidity
+        humidityView.value = this.weatherViewEntity.humidity
         humidityView.jumpDrawablesToCurrentState()
 
         shareButton.setOnClickListener{
-            callback.onClick("${dateTextView.text} temperature is ${maxTemperatureTextView.text}")
+            callback.onClick(this.weatherViewEntity)
         }
     }
 
 
     /** Called when pressed share button */
     interface OnClickCallback{
-        fun onClick(text : String)
+        fun onClick(weatherViewEntity: WeatherViewEntity)
     }
 }

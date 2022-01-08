@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.weather.R
 import com.example.weather.ui.entities.WeatherViewEntity
-import com.example.weather.ui.holders.CityViewHolder
 import com.example.weather.ui.holders.WeatherViewHolder
+
+private val TAG = WeatherAdapter::class.java.simpleName
 
 class WeatherAdapter : ListAdapter<WeatherViewEntity, WeatherViewHolder>(WeatherItemCallback) {
 

@@ -1,6 +1,5 @@
 package com.example.weather.data.db
 
-import androidx.annotation.TransitionRes
 import androidx.room.*
 import com.example.weather.data.db.entities.WeatherEntity
 import kotlinx.coroutines.flow.Flow

@@ -1,7 +1,6 @@
 package com.example.weather.common
 
 import android.content.Context
-import com.example.weather.data.db.entities.CityEntity
 import com.example.weather.ui.entities.CityViewEntity
 import com.google.gson.Gson;
 import java.io.FileNotFoundException

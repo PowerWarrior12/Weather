@@ -4,6 +4,8 @@ import com.example.weather.data.interfaces.IWeatherRepository
 import com.example.weather.ui.entities.CityViewEntity
 import com.example.weather.ui.entities.CurrentWeatherViewEntity
 
+private val TAG = GetCurrentWeatherInteractor::class.java.simpleName
+
 class GetCurrentWeatherInteractor(
     private val weatherRepository : IWeatherRepository
 ) {

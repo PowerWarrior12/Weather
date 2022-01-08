@@ -7,10 +7,9 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
-import com.example.weather.data.db.entities.CityEntity
 import com.example.weather.ui.entities.CityViewEntity
 
-private const val TAG = "CityViewHolder"
+private val TAG = CityViewHolder::class.java.simpleName
 /**
  * Holder for city element in RecyclerView
 */
@@ -32,8 +31,12 @@ class CityViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     /** Initializes holder's elements */
-    fun bind(cityEntity: CityViewEntity, clickCallback: OnClickCallback, longClickCallback : OnLongClickCallback){
+    fun bind(
+        cityEntity: CityViewEntity,
+        clickCallback: OnClickCallback,
+        longClickCallback : OnLongClickCallback){
         this.cityEntity = cityEntity
+        
         itemView.setOnClickListener{
             Log.d(TAG, cityEntity.name)
             clickCallback.onClick(cityEntity)

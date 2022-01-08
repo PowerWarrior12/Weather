@@ -7,8 +7,6 @@ import com.example.weather.data.db.entities.CityEntity
 import com.example.weather.data.interfaces.IEntityMapper
 import com.example.weather.ui.entities.CityViewEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 private val TAG = CitiesDBDataSource::class.java.simpleName

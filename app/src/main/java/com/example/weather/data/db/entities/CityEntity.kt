@@ -3,7 +3,6 @@ package com.example.weather.data.db.entities
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(
     tableName = "city",

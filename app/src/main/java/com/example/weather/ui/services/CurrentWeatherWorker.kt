@@ -17,6 +17,9 @@ import com.example.weather.ui.entities.CurrentWeatherViewEntity
 import kotlinx.coroutines.*
 
 private val TAG = CurrentWeatherWorker::class.simpleName
+private const val ChanelId = "WeatherChanel"
+private const val ChanelTitle = "Weather Chanel"
+private const val NotificationId = 1
 
 class CurrentWeatherWorker(private val appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
@@ -39,43 +42,47 @@ class CurrentWeatherWorker(private val appContext: Context, workerParams: Worker
         currentWeather = currentCity?.let {
             getCurrentWeatherInteractor.run(city = it)
         }
-        Log.d(TAG, "${currentWeather?.temperature}")
     }
 
 
     private fun initNotificationBuilder(): NotificationCompat.Builder {
-        return NotificationCompat.Builder(appContext, "Your_channel_id")
+        Log.d(TAG, "Init Notification builder")
+        return NotificationCompat.Builder(appContext, ChanelId)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(currentCity?.name ?: "NONE")
-            .setAutoCancel(false)
             .setContentText("Current temperature is ${currentWeather?.temperature ?: "NONE"}")
     }
     private fun initNotification() : Notification {
         val builder = initNotificationBuilder()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "Your_channel_id"
+            val channelId = ChanelId
             val channel = NotificationChannel(
                 channelId,
-                "Channel human readable title",
+                ChanelTitle,
                 NotificationManager.IMPORTANCE_HIGH
             )
             notificationManager.createNotificationChannel(channel)
         }
+        Log.d(TAG, "Build notification")
         return builder.build()
     }
 
     private fun updateNotification(){
         notification = initNotification()
-        notificationManager.notify(1, notification)
+        notificationManager.notify(NotificationId, notification)
+        Log.d(TAG, "Update Notification builder")
     }
 
     private fun update(){
         pScope.launch {
             currentCity = getCurrentCityInteractor.run()
+            Log.d(TAG, "Get current weather")
             updateCurrentWeather()
-            withContext(Dispatchers.Main){
-                updateNotification()
+            if (currentCity != null){
+                withContext(Dispatchers.Main){
+                    updateNotification()
+                }
             }
         }
     }

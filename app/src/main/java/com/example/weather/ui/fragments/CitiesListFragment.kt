@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +29,7 @@ private val TAG = CitiesListFragment::class.java.simpleName
 
 /**
  * Fragment for displaying a list of cities in RecyclerView
+ * Create using newInstance
 */
 class CitiesListFragment : MvpAppCompatFragment(R.layout.cities_list_fragment), ICitiesListView {
 
@@ -48,11 +47,6 @@ class CitiesListFragment : MvpAppCompatFragment(R.layout.cities_list_fragment), 
         return CitiesListPresenter(
             ((requireActivity().application) as WeatherApplication).getCitiesInteractor,
             ((requireActivity().application) as WeatherApplication).getCurrentCityInteractor)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.i(TAG, "On create")
     }
 
     @SuppressLint("WrongConstant")
@@ -73,7 +67,6 @@ class CitiesListFragment : MvpAppCompatFragment(R.layout.cities_list_fragment), 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        citiesPresenter.onViewReady()
     }
 
     override fun onResume() {
@@ -81,40 +74,35 @@ class CitiesListFragment : MvpAppCompatFragment(R.layout.cities_list_fragment), 
         citiesPresenter.onResume()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        citiesPresenter.onDestroyView()
-        Log.d(TAG, "On destroy")
-    }
-
     override fun updateData(cities : MutableList<CityViewEntity>) {
         this.citiesAdapter.submitList(cities)
     }
 
-    override fun openDetailWindow(city: CityViewEntity, currentCity : CityViewEntity?) {
-        (requireActivity() as IOpenFragment).run(city, currentCity)
+    override fun openDetailWindow(cityId : Int) {
+        (requireActivity() as IOpenFragment).run(cityId)
     }
 
     override fun showMessage(message: Int) {
-        TODO("Not yet implemented")
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun moveCities(firstCityInd: Int, secondCityInd: Int) {
+    override fun moveCities(firstCityInd: Int, secondCityInd: Int, list : List<CityViewEntity>) {
+        this.citiesAdapter.setList(list)
         this.citiesAdapter.notifyItemMoved(firstCityInd, secondCityInd)
     }
 
     override fun startLaunch() {
-        loadSpaceView.isVisible = true
-        progressBarView.isVisible = true
+        loadSpaceView.visibility = View.VISIBLE
+        progressBarView.visibility = View.VISIBLE
     }
 
     override fun endLaunch() {
-        loadSpaceView.isVisible = false
-        progressBarView.isVisible = false
+        loadSpaceView.visibility = View.GONE
+        progressBarView.visibility = View.GONE
     }
 
     private fun initView(view : View){
@@ -141,7 +129,6 @@ class CitiesListFragment : MvpAppCompatFragment(R.layout.cities_list_fragment), 
         citiesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@CitiesListFragment.citiesAdapter
-            addItemDecoration(DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation))
         }
     }
 
@@ -154,14 +141,12 @@ class CitiesListFragment : MvpAppCompatFragment(R.layout.cities_list_fragment), 
 
     companion object{
         fun newInstance() : CitiesListFragment{
-            return CitiesListFragment().apply {
-
-            }
+            return CitiesListFragment()
         }
     }
 
     /** Interface for open fragment */
     interface IOpenFragment{
-        fun run(city : CityViewEntity, currentCity : CityViewEntity?)
+        fun run(cityId : Int)
     }
 }

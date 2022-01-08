@@ -1,9 +1,6 @@
 package com.example.weather.ui.entities
 
-import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
-import kotlin.reflect.typeOf
 
 data class CityViewEntity(
     @PrimaryKey

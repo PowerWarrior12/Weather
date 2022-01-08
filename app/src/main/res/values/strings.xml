@@ -7,4 +7,6 @@
     <string name="humidity_text">Humidity : </string>
     <string name="pressure_text">Pressure : </string>
     <string name="current_city_button">Track</string>
+    <string name="degree">K°</string>
+    <string name="percent">%</string>
 </resources>

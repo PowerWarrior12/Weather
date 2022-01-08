@@ -9,13 +9,13 @@ private val TAG = SetNewCurrentCityInteractor::class.simpleName
 class SetNewCurrentCityInteractor(
     private val citiesRepository : ICitiesRepository
 ) {
-    suspend fun run(city : CityViewEntity, currentCity : CityViewEntity?) {
+    suspend fun run(city : CityViewEntity) {
+        val currentCity = citiesRepository.getCurrentCity()
         currentCity?.apply {
             isCurrent = false
         }?.let { citiesRepository.updateCity(it) }
         citiesRepository.updateCity(city.apply {
             isCurrent = true
         })
-        Log.d("MyLog", "End update current city")
     }
 }

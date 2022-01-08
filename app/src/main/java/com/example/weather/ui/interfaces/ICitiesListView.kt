@@ -8,17 +8,15 @@ import moxy.viewstate.strategy.StateStrategyType
 /**
  * View interface for cities list view
 */
-@StateStrategyType(value = AddToEndSingleStrategy::class)
+@StateStrategyType(value = SkipStrategy::class)
 interface ICitiesListView : MvpView {
     fun updateData(cities : MutableList<CityViewEntity>)
-    @StateStrategyType(value = SkipStrategy::class)
-    fun openDetailWindow(city : CityViewEntity, currentCity : CityViewEntity?)
-    @StateStrategyType(value = SkipStrategy::class)
+    fun openDetailWindow(cityId : Int)
     fun showMessage(message : Int)
-    @StateStrategyType(value = SkipStrategy::class)
     fun showMessage(message : String)
-    @StateStrategyType(value = SkipStrategy::class)
-    fun moveCities(firstCityInd : Int, secondCityInd : Int)
+    fun moveCities(firstCityInd : Int, secondCityInd : Int, list : List<CityViewEntity>)
+    @StateStrategyType(value = AddToEndSingleStrategy::class)
     fun startLaunch()
+    @StateStrategyType(value = AddToEndSingleStrategy::class)
     fun endLaunch()
 }

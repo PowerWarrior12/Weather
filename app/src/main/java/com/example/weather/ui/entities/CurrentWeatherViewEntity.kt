@@ -1,6 +1,5 @@
 package com.example.weather.ui.entities
 
-import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class CurrentWeatherViewEntity(

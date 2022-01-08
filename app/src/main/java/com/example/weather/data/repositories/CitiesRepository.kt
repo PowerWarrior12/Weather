@@ -1,10 +1,12 @@
 package com.example.weather.data.repositories
 
+import android.util.Log
 import com.example.weather.data.interfaces.ICitiesLocalDataSource
 import com.example.weather.data.interfaces.ICitiesRepository
-import com.example.weather.data.db.entities.CityEntity
 import com.example.weather.ui.entities.CityViewEntity
 import kotlinx.coroutines.flow.Flow
+
+private val TAG = CitiesRepository::class.java.simpleName
 
 class CitiesRepository(
     private val citiesDataSource : ICitiesLocalDataSource

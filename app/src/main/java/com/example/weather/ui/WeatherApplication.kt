@@ -3,14 +3,17 @@ package com.example.weather.ui
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import com.example.weather.data.interfaces.IWeatherRepository
 import com.example.weather.data.repositories.CitiesRepository
 import com.example.weather.interactors.*
 import com.example.weather.ui.di.DependenciesProvider
 import com.example.weather.ui.services.CurrentWeatherWorker
+import com.example.weather.ui.views.CircleDiagramView
 import java.util.concurrent.TimeUnit
+
+private const val WorkTag = "CurrentWeatherTag"
+private val TAG = WeatherApplication::class.java.simpleName
 
 class WeatherApplication : Application() {
 
@@ -22,6 +25,9 @@ class WeatherApplication : Application() {
 
     val getCitiesInteractor : GetCitiesInteractor
         get() = GetCitiesInteractor(citiesRepository)
+
+    val getCityInteractor : GetCityInteractor
+        get() = GetCityInteractor(citiesRepository)
 
     val getCurrentCityInteractor : GetCurrentCityInteractor
         get() = GetCurrentCityInteractor(citiesRepository)
@@ -36,11 +42,18 @@ class WeatherApplication : Application() {
         get() = GetCurrentWeatherInteractor(weatherRepository)
 
     fun startCurrentWeatherService(){
-        val myWorkRequest = PeriodicWorkRequest.Builder(CurrentWeatherWorker::class.java, 30, TimeUnit.MINUTES)
+        val constraints: Constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
+
+        val currentWeatherWorkRequest = PeriodicWorkRequest.Builder(CurrentWeatherWorker::class.java, 15, TimeUnit.MINUTES)
+            .addTag(WorkTag)
+            .setConstraints(constraints)
+            .build()
+
         WorkManager
             .getInstance(this)
-            .enqueue(myWorkRequest)
+            .enqueueUniquePeriodicWork(WorkTag, ExistingPeriodicWorkPolicy.REPLACE, currentWeatherWorkRequest)
     }
 
     override fun onCreate() {

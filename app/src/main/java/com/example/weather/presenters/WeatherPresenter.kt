@@ -2,6 +2,8 @@ package com.example.weather.presenters
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.weather.interactors.GetCityInteractor
+import com.example.weather.interactors.GetCurrentWeatherInteractor
 import com.example.weather.interactors.GetWeatherInteractor
 import com.example.weather.interactors.SetNewCurrentCityInteractor
 import com.example.weather.ui.entities.CityViewEntity
@@ -12,28 +14,41 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import kotlinx.coroutines.flow.*
 
+private val TAG = WeatherPresenter::class.java.simpleName
+
 @InjectViewState
 class WeatherPresenter(
     private val weatherInteractor: GetWeatherInteractor,
     private val setNewCurrentCityInteractor: SetNewCurrentCityInteractor,
-    private val city: CityViewEntity,
-    private val currentCity : CityViewEntity?
+    private val getCityInteractor : GetCityInteractor,
+    private val cityId : Int
 ) : MvpPresenter<IWeatherView>() {
 
     private val job = Job()
     private val pScope = CoroutineScope(job + Dispatchers.IO)
     private var weather = listOf<WeatherViewEntity>()
+    private lateinit var city : CityViewEntity
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        if (city.isCurrent)
-            viewState.setCurrentCityButtonEnable(false)
         pScope.launch {
+            withContext(Dispatchers.Main){
+                viewState.startLaunch()
+            }
+            city = getCityInteractor.run(cityId)!!
+            withContext(Dispatchers.Main){
+                viewState.setCityName(cityName = city.name)
+                if (city.isCurrent){
+                    viewState.setCurrentCityButtonEnable(false)
+                }
+            }
             weatherInteractor.run(city, pScope).collect{
                 weather = it
                 withContext(Dispatchers.Main){
                     viewState.updateData(weather.toList())
+                    if (weather.isNotEmpty())
+                        viewState.endLaunch()
                 }
             }
         }
@@ -41,16 +56,17 @@ class WeatherPresenter(
 
     fun onCurrentCityButtonPressed(){
         pScope.launch {
-            setNewCurrentCityInteractor.run(city, currentCity)
+            setNewCurrentCityInteractor.run(city)
             withContext(Dispatchers.Main){
                 viewState.startCurrentWeatherService()
                 viewState.setCurrentCityButtonEnable(false)
-                viewState.showMessage("New city selected")
+                viewState.showMessage("Отмечен новый город")
             }
         }
     }
 
-    fun onShareButtonPressed(text : String){
-        viewState.shareInformation(text)
+    fun onShareButtonPressed(weather : WeatherViewEntity){
+        viewState.shareInformation("Погода на ${weather.date} : температура ${weather.minTemperature}")
     }
+
 }

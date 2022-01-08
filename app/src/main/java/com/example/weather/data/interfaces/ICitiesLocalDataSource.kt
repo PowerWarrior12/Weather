@@ -1,6 +1,5 @@
 package com.example.weather.data.interfaces
 
-import com.example.weather.data.db.entities.CityEntity
 import com.example.weather.ui.entities.CityViewEntity
 import kotlinx.coroutines.flow.Flow
 

@@ -1,13 +1,8 @@
 package com.example.weather.ui.helpers
 
-import android.animation.Animator
-import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.view.ViewCompat
-import androidx.core.view.ViewPropertyAnimatorListener
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weather.R
 
 /**
  * Implementation of ItemTouchHelper.Callback
@@ -37,7 +32,8 @@ class SimpleItemTouchHelperCallback(private val itemAdapter: ItemTouchHelperAdap
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        return itemAdapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
+        itemAdapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
+        return true
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
@@ -47,9 +43,10 @@ class SimpleItemTouchHelperCallback(private val itemAdapter: ItemTouchHelperAdap
             ItemTouchHelper.ACTION_STATE_DRAG -> {
                 ViewCompat.animate(view)
                     .setDuration(150L)
-                    .alpha(0.9f)
+                    .alpha(0.5f)
                     .scaleX(0.9f)
                     .scaleY(0.9f)
+                    .translationZ(0.9f)
             }
         }
     }

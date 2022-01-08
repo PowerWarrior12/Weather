@@ -8,10 +8,8 @@ import com.example.weather.data.interfaces.IWeatherRepository
 import com.example.weather.ui.entities.CityViewEntity
 import com.example.weather.ui.entities.WeatherViewEntity
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 private val TAG = GetWeatherInteractor::class.simpleName
 
@@ -22,7 +20,6 @@ class GetWeatherInteractor(
     suspend fun run(city : CityViewEntity, pScope : CoroutineScope) : Flow<List<WeatherViewEntity>> {
         if (NetworkHelper.isNetworkAvailable()){
             pScope.launch{
-                Log.d(TAG, "Network load in ${Thread.currentThread().name}")
                 val weather = weatherRepository.loadRemoteWeather(city.coord.lat, city.coord.lon)
                 if (weather.isNotEmpty()){
                     weatherRepository.updateWeather(weather.map{ weatherViewEntity ->
@@ -31,11 +28,10 @@ class GetWeatherInteractor(
                         }
                     })
                 }
-                Log.d(TAG, "Network loaded in ${Thread.currentThread().name}")
             }
         }
         val weather = weatherRepository.loadLocalWeather(cityId = city.id)
-        Log.d(TAG, "BD load in ${Thread.currentThread().name}")
+        Log.d(TAG, "BD loaded in ${Thread.currentThread().name}")
         return weather
     }
 }

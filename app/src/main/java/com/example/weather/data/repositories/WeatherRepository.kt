@@ -7,6 +7,8 @@ import com.example.weather.ui.entities.CurrentWeatherViewEntity
 import com.example.weather.ui.entities.WeatherViewEntity
 import kotlinx.coroutines.flow.Flow
 
+private val TAG = WeatherRepository::class.java.simpleName
+
 class WeatherRepository(
     private val remoteDataSource: IWeatherRemoteDataSource,
     private val localDataSource: IWeatherLocalDataSource
