@@ -8,6 +8,7 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.work.CoroutineWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.weather.R
@@ -22,7 +23,7 @@ private const val ChanelTitle = "Weather Chanel"
 private const val NotificationId = 1
 
 class CurrentWeatherWorker(private val appContext: Context, workerParams: WorkerParameters) :
-    Worker(appContext, workerParams) {
+    CoroutineWorker(appContext, workerParams) {
 
     private val getCurrentWeatherInteractor = (appContext as WeatherApplication).getCurrentWeatherInteractor
     private val getCurrentCityInteractor = (appContext as WeatherApplication).getCurrentCityInteractor
@@ -30,12 +31,10 @@ class CurrentWeatherWorker(private val appContext: Context, workerParams: Worker
     private var currentCity : CityViewEntity? = null
     private var currentWeather : CurrentWeatherViewEntity? = null
     private lateinit var notification: Notification
-    private val job = Job()
-    private val pScope = CoroutineScope(job + Dispatchers.IO)
 
-    override fun doWork(): Result {
+    override suspend fun doWork(): Result = coroutineScope {
         update()
-        return Result.success()
+        Result.success()
     }
 
     private suspend fun updateCurrentWeather(){
@@ -43,7 +42,6 @@ class CurrentWeatherWorker(private val appContext: Context, workerParams: Worker
             getCurrentWeatherInteractor.run(city = it)
         }
     }
-
 
     private fun initNotificationBuilder(): NotificationCompat.Builder {
         Log.d(TAG, "Init Notification builder")
@@ -74,16 +72,12 @@ class CurrentWeatherWorker(private val appContext: Context, workerParams: Worker
         Log.d(TAG, "Update Notification builder")
     }
 
-    private fun update(){
-        pScope.launch {
-            currentCity = getCurrentCityInteractor.run()
+    private suspend fun update(){
+        currentCity = getCurrentCityInteractor.run()
+        if (currentCity != null){
             Log.d(TAG, "Get current weather")
             updateCurrentWeather()
-            if (currentCity != null){
-                withContext(Dispatchers.Main){
-                    updateNotification()
-                }
-            }
+                updateNotification()
         }
     }
 }
