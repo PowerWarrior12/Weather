@@ -57,20 +57,6 @@ abstract class WeatherDatabase : RoomDatabase() {
             INSTANCE?.let{ instance ->
                 scope.launch {
                     Log.d(TAG, "Start first load")
-                    /*val reader = context.applicationContext
-                        .assets
-                        .open(Configurations.citiesJson)
-                        .bufferedReader()
-                    val jsonReader = JsonReader(reader)
-                    jsonReader.beginArray()
-                    val gson = Gson()
-                    val type: Type = TypeToken.get(CityEntity::class.java).type
-                    while (jsonReader.hasNext()){
-                        instance
-                            .cityDao()
-                            .addCity(gson.fromJson(jsonReader, type))
-                    }
-                    Log.d(TAG, "End first load")*/
 
                     val mapper = CityEntityMapper()
                     instance.citiesLocalDataSource.loadCities().collect { list ->
