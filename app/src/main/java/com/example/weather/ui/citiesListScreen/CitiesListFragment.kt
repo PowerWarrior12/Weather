@@ -1,4 +1,4 @@
-package com.example.weather.ui.fragments
+package com.example.weather.ui.citiesListScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -15,11 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
 import com.example.weather.presenters.CitiesListPresenter
 import com.example.weather.ui.WeatherApplication
-import com.example.weather.ui.adapters.CitiesAdapter
+import com.example.weather.ui.di.DependenciesProvider
 import com.example.weather.ui.entities.CityViewEntity
 import com.example.weather.ui.helpers.ItemTouchHelperAdapter
 import com.example.weather.ui.helpers.SimpleItemTouchHelperCallback
-import com.example.weather.ui.holders.CityViewHolder
 import com.example.weather.ui.interfaces.ICitiesListView
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -45,8 +44,8 @@ class CitiesListFragment : MvpAppCompatFragment(R.layout.cities_list_fragment), 
     @ProvidePresenter
     fun provideCitiesPresenter() : CitiesListPresenter{
         return CitiesListPresenter(
-            ((requireActivity().application) as WeatherApplication).getCitiesInteractor,
-            ((requireActivity().application) as WeatherApplication).getCurrentCityInteractor)
+            DependenciesProvider.getCitiesInteractor(requireContext()),
+            DependenciesProvider.getCurrentCityInteractor(requireContext()))
     }
 
     @SuppressLint("WrongConstant")
@@ -95,12 +94,12 @@ class CitiesListFragment : MvpAppCompatFragment(R.layout.cities_list_fragment), 
         this.citiesAdapter.notifyItemMoved(firstCityInd, secondCityInd)
     }
 
-    override fun startLaunch() {
+    override fun showLoader() {
         loadSpaceView.visibility = View.VISIBLE
         progressBarView.visibility = View.VISIBLE
     }
 
-    override fun endLaunch() {
+    override fun hideLoader() {
         loadSpaceView.visibility = View.GONE
         progressBarView.visibility = View.GONE
     }

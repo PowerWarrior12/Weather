@@ -1,4 +1,4 @@
-package com.example.weather.ui.adapters
+package com.example.weather.ui.citiesListScreen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
 import com.example.weather.ui.entities.CityViewEntity
-import com.example.weather.ui.holders.CityViewHolder
 
 
 private val TAG = CitiesAdapter::class.java.simpleName

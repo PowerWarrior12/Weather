@@ -22,7 +22,7 @@ interface IWeatherView : MvpView {
     @StateStrategyType(value = AddToEndSingleStrategy::class)
     fun setCityName(cityName : String)
     @StateStrategyType(value = AddToEndSingleStrategy::class)
-    fun startLaunch()
+    fun showLoader()
     @StateStrategyType(value = AddToEndSingleStrategy::class)
-    fun endLaunch()
+    fun hideLoader()
 }

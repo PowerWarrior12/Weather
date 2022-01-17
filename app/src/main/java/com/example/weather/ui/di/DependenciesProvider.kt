@@ -6,28 +6,52 @@ import com.example.weather.common.JSONHelper
 import com.example.weather.data.api.RetrofitService
 import com.example.weather.data.api.WeatherApi
 import com.example.weather.data.db.WeatherDatabase
+import com.example.weather.data.interfaces.ICitiesLoadDataSource
 import com.example.weather.data.interfaces.ICitiesLocalDataSource
 import com.example.weather.data.mappers.*
 import com.example.weather.data.repositories.*
+import com.example.weather.interactors.*
 
 object DependenciesProvider {
 
     private var cityDB : WeatherDatabase? = null
-    private var citiesJSONSource : ICitiesLocalDataSource? = null
+    private var citiesJSONSource : ICitiesLoadDataSource? = null
     private var citiesRepository : CitiesRepository? = null
     private var weatherRepository : WeatherRepository? = null
 
+    fun getCitiesInteractor(context: Context) : GetCitiesInteractor{
+        return GetCitiesInteractor(getCitiesRepository(context))
+    }
 
+    fun getCityInteractor(context: Context) : GetCityInteractor{
+        return GetCityInteractor(getCitiesRepository(context))
+    }
 
-    fun getWeatherRepository(context : Context) : WeatherRepository{
+    fun getCurrentCityInteractor(context: Context) : GetCurrentCityInteractor{
+        return GetCurrentCityInteractor(getCitiesRepository(context))
+    }
+
+    fun getWeatherInteractor(context: Context) : GetWeatherInteractor{
+        return GetWeatherInteractor(getWeatherRepository(context))
+    }
+
+    fun getSetNewCurrentCityInteractor(context: Context) : SetNewCurrentCityInteractor{
+        return SetNewCurrentCityInteractor(getCitiesRepository(context))
+    }
+
+    fun getCurrentWeatherInteractor(context: Context) : GetCurrentWeatherInteractor{
+        return GetCurrentWeatherInteractor(getWeatherRepository(context))
+    }
+
+    private fun getWeatherRepository(context : Context) : WeatherRepository{
         weatherRepository = weatherRepository ?: WeatherRepository(
             getWeatherRetrofitDataSource(),
             getWeatherDBDataSource(context))
         return weatherRepository as WeatherRepository
     }
 
-    fun getCitiesRepository(context: Context) : CitiesRepository{
-        citiesRepository = citiesRepository ?: CitiesRepository(getCitiesDBDataSource(context))
+    private fun getCitiesRepository(context: Context) : CitiesRepository{
+        citiesRepository = citiesRepository ?: CitiesRepository(getCitiesDBDataSource(context), getCitiesDBDataSource(context))
         return citiesRepository as CitiesRepository
     }
 

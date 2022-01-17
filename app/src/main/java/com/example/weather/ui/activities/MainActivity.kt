@@ -2,16 +2,15 @@ package com.example.weather.ui.activities
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.weather.ui.fragments.CitiesListFragment
-import com.example.weather.ui.fragments.CitiesListFragment.IOpenFragment
-import com.example.weather.ui.fragments.WeatherFragment
 import com.example.weather.R
-import com.example.weather.ui.adapters.WeatherAdapter
+import com.example.weather.ui.citiesListScreen.CitiesListFragment
+import com.example.weather.ui.detailedScreen.WeatherFragment
 import moxy.MvpAppCompatActivity
 
 private val TAG = MainActivity::class.java.simpleName
 
-class MainActivity : MvpAppCompatActivity(R.layout.activity_main), IOpenFragment{
+class MainActivity : MvpAppCompatActivity(R.layout.activity_main),
+    CitiesListFragment.IOpenFragment {
 
     private val citiesListFragment = CitiesListFragment.newInstance()
 

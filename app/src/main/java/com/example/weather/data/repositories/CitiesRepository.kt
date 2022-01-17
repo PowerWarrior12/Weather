@@ -1,6 +1,7 @@
 package com.example.weather.data.repositories
 
 import android.util.Log
+import com.example.weather.data.interfaces.ICitiesLoadDataSource
 import com.example.weather.data.interfaces.ICitiesLocalDataSource
 import com.example.weather.data.interfaces.ICitiesRepository
 import com.example.weather.ui.entities.CityViewEntity
@@ -9,15 +10,16 @@ import kotlinx.coroutines.flow.Flow
 private val TAG = CitiesRepository::class.java.simpleName
 
 class CitiesRepository(
-    private val citiesDataSource : ICitiesLocalDataSource
+    private val citiesDataSource : ICitiesLocalDataSource,
+    private val citiesLoadDataSource : ICitiesLoadDataSource
 ) : ICitiesRepository {
 
     override suspend fun getCities(): Flow<List<CityViewEntity>> {
-        return citiesDataSource.loadCities()
+        return citiesLoadDataSource.loadCities()
     }
 
     override suspend fun saveCities(cities: List<CityViewEntity>) {
-        TODO("Not yet implemented")
+        citiesDataSource.saveCities(cities)
     }
 
     override suspend fun updateCity(city: CityViewEntity) {

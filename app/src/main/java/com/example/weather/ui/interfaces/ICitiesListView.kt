@@ -16,7 +16,7 @@ interface ICitiesListView : MvpView {
     fun showMessage(message : String)
     fun moveCities(firstCityInd : Int, secondCityInd : Int, list : List<CityViewEntity>)
     @StateStrategyType(value = AddToEndSingleStrategy::class)
-    fun startLaunch()
+    fun showLoader()
     @StateStrategyType(value = AddToEndSingleStrategy::class)
-    fun endLaunch()
+    fun hideLoader()
 }

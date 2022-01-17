@@ -7,7 +7,6 @@ import android.view.View
 import com.example.weather.R
 import kotlin.math.roundToInt
 import android.graphics.RectF
-import com.example.weather.ui.holders.CityViewHolder
 
 private const val MAX_TEXT_SIZE = 100
 private val TAG = CircleDiagramView::class.java.simpleName

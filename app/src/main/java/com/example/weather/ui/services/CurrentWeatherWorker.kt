@@ -13,6 +13,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.weather.R
 import com.example.weather.ui.WeatherApplication
+import com.example.weather.ui.di.DependenciesProvider
 import com.example.weather.ui.entities.CityViewEntity
 import com.example.weather.ui.entities.CurrentWeatherViewEntity
 import kotlinx.coroutines.*
@@ -25,8 +26,8 @@ private const val NotificationId = 1
 class CurrentWeatherWorker(private val appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
-    private val getCurrentWeatherInteractor = (appContext as WeatherApplication).getCurrentWeatherInteractor
-    private val getCurrentCityInteractor = (appContext as WeatherApplication).getCurrentCityInteractor
+    private val getCurrentWeatherInteractor = DependenciesProvider.getCurrentWeatherInteractor(appContext)
+    private val getCurrentCityInteractor = DependenciesProvider.getCurrentCityInteractor(appContext)
     private val notificationManager = appContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     private var currentCity : CityViewEntity? = null
     private var currentWeather : CurrentWeatherViewEntity? = null

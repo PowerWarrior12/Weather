@@ -17,30 +17,6 @@ private val TAG = WeatherApplication::class.java.simpleName
 
 class WeatherApplication : Application() {
 
-    private val citiesRepository : CitiesRepository
-        get() = DependenciesProvider.getCitiesRepository(this)
-
-    private val weatherRepository : IWeatherRepository
-        get() = DependenciesProvider.getWeatherRepository(this)
-
-    val getCitiesInteractor : GetCitiesInteractor
-        get() = GetCitiesInteractor(citiesRepository)
-
-    val getCityInteractor : GetCityInteractor
-        get() = GetCityInteractor(citiesRepository)
-
-    val getCurrentCityInteractor : GetCurrentCityInteractor
-        get() = GetCurrentCityInteractor(citiesRepository)
-
-    val getWeatherInteractor : GetWeatherInteractor
-        get() = GetWeatherInteractor(weatherRepository)
-
-    val getSetNewCurrentCityInteractor : SetNewCurrentCityInteractor
-        get() = SetNewCurrentCityInteractor(citiesRepository)
-
-    val getCurrentWeatherInteractor : GetCurrentWeatherInteractor
-        get() = GetCurrentWeatherInteractor(weatherRepository)
-
     fun startCurrentWeatherService(){
         val constraints: Constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)

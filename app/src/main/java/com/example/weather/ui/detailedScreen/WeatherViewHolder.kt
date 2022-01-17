@@ -1,4 +1,4 @@
-package com.example.weather.ui.holders
+package com.example.weather.ui.detailedScreen
 
 import android.annotation.SuppressLint
 import android.text.format.DateFormat
@@ -7,7 +7,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
-import com.example.weather.ui.adapters.WeatherAdapter
 import com.example.weather.ui.entities.WeatherViewEntity
 import com.example.weather.ui.views.CircleDiagramView
 

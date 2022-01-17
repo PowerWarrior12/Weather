@@ -33,7 +33,7 @@ class CitiesListPresenter(
 
         Log.d(TAG, "On first view attach")
         pScopeLoad.launch {
-            viewState.startLaunch()
+            viewState.showLoader()
             getCitiesInteractor.run().collect { list ->
                 updateCities(list)
             }
@@ -73,7 +73,7 @@ class CitiesListPresenter(
         if (list.isNotEmpty()){
             withContext(Dispatchers.Main){
                 viewState.updateData(citiesList.toMutableList())
-                viewState.endLaunch()
+                viewState.hideLoader()
             }
             jobLoad.cancel()
         }

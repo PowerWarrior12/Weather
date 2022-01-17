@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.example.weather.data.db.WeatherDatabase
 import com.example.weather.data.interfaces.ICitiesLocalDataSource
 import com.example.weather.data.db.entities.CityEntity
+import com.example.weather.data.interfaces.ICitiesLoadDataSource
 import com.example.weather.data.interfaces.IEntityMapper
 import com.example.weather.ui.entities.CityViewEntity
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,7 @@ class CitiesDBDataSource(
     private val cityDB : WeatherDatabase,
     private val mapperTo : IEntityMapper<CityEntity, CityViewEntity>,
     private val mapperOf : IEntityMapper<CityViewEntity, CityEntity>,
-) : ICitiesLocalDataSource {
+) : ICitiesLocalDataSource, ICitiesLoadDataSource {
     @SuppressLint("Range")
     override suspend fun loadCities(): Flow<List<CityViewEntity>> {
         return cityDB.cityDao().getCities().map { list ->

@@ -10,4 +10,6 @@
     <string name="current_city_button">Подписаться</string>
     <string name="degree">K°</string>
     <string name="percent">%</string>
+    <string name="date_format">E
+yyyy-MM-dd</string>
 </resources>

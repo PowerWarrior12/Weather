@@ -3,7 +3,6 @@ package com.example.weather.presenters
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.weather.interactors.GetCityInteractor
-import com.example.weather.interactors.GetCurrentWeatherInteractor
 import com.example.weather.interactors.GetWeatherInteractor
 import com.example.weather.interactors.SetNewCurrentCityInteractor
 import com.example.weather.ui.entities.CityViewEntity
@@ -34,7 +33,7 @@ class WeatherPresenter(
         super.onFirstViewAttach()
         pScope.launch {
             withContext(Dispatchers.Main){
-                viewState.startLaunch()
+                viewState.showLoader()
             }
             city = getCityInteractor.run(cityId)!!
             withContext(Dispatchers.Main){
@@ -48,7 +47,7 @@ class WeatherPresenter(
                 withContext(Dispatchers.Main){
                     viewState.updateData(weather.toList())
                     if (weather.isNotEmpty())
-                        viewState.endLaunch()
+                        viewState.hideLoader()
                 }
             }
         }

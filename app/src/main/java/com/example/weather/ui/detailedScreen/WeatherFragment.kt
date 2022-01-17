@@ -1,4 +1,4 @@
-package com.example.weather.ui.fragments
+package com.example.weather.ui.detailedScreen
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,14 +14,13 @@ import com.example.weather.R
 import com.example.weather.ui.entities.WeatherViewEntity
 import com.example.weather.presenters.WeatherPresenter
 import com.example.weather.ui.WeatherApplication
-import com.example.weather.ui.adapters.WeatherAdapter
+import com.example.weather.ui.di.DependenciesProvider
 import com.example.weather.ui.interfaces.IWeatherView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import com.example.weather.ui.holders.WeatherViewHolder
 
 private val TAG = WeatherFragment::class.java.simpleName
 /**
@@ -44,9 +43,9 @@ class WeatherFragment : MvpAppCompatFragment(), IWeatherView {
     @ProvidePresenter
     fun presenterProvider() : WeatherPresenter{
         return WeatherPresenter(
-            ((requireActivity().application) as WeatherApplication).getWeatherInteractor,
-            ((requireActivity().application) as WeatherApplication).getSetNewCurrentCityInteractor,
-            ((requireActivity().application) as WeatherApplication).getCityInteractor,
+            DependenciesProvider.getWeatherInteractor(requireContext()),
+            DependenciesProvider.getSetNewCurrentCityInteractor(requireContext()),
+            DependenciesProvider.getCityInteractor(requireContext()),
             cityId = cityId
         )
     }
@@ -70,7 +69,7 @@ class WeatherFragment : MvpAppCompatFragment(), IWeatherView {
         weatherAdapter.submitList(weatherView)
         if (weatherView.isNotEmpty()){
             TabLayoutMediator(weightTableLayout, weatherViewPager2){ tab, position ->
-                tab.text = DateFormat.format("E\nyyyy-MM-dd",weatherView[position].date)
+                tab.text = DateFormat.format(getString(R.string.date_format),weatherView[position].date)
             }.attach()
         }
     }
@@ -104,11 +103,11 @@ class WeatherFragment : MvpAppCompatFragment(), IWeatherView {
         currentCityButton.text = cityName
     }
 
-    override fun startLaunch() {
+    override fun showLoader() {
         progressBar.visibility = View.VISIBLE
     }
 
-    override fun endLaunch() {
+    override fun hideLoader() {
         progressBar.visibility = View.GONE
     }
 

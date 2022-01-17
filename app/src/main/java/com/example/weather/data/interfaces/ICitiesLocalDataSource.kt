@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
  * Interface to work with cities in a local data source
 */
 interface ICitiesLocalDataSource {
-    suspend fun loadCities() : Flow<List<CityViewEntity>>
     suspend fun saveCities(cities: List<CityViewEntity>)
     suspend fun updateCity(city : CityViewEntity)
     suspend fun getCurrentCity() : CityViewEntity?

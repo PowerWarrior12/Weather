@@ -1,4 +1,4 @@
-package com.example.weather.ui.holders
+package com.example.weather.ui.citiesListScreen
 
 import android.util.Log
 import android.view.View

@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.weather.data.interfaces.ICitiesLocalDataSource
 import com.example.weather.data.db.entities.CityEntity
 import com.example.weather.data.db.entities.WeatherEntity
+import com.example.weather.data.interfaces.ICitiesLoadDataSource
 import com.example.weather.data.mappers.CityEntityMapper
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
@@ -18,13 +19,13 @@ private val TAG = WeatherDatabase::class.java.simpleName
 abstract class WeatherDatabase : RoomDatabase() {
     abstract fun cityDao() : CityDao
     abstract fun weatherDao() : WeatherDao
-    private lateinit var citiesLocalDataSource: ICitiesLocalDataSource
+    private lateinit var citiesLocalDataSource: ICitiesLoadDataSource
 
     companion object{
         @Volatile
         private var INSTANCE: WeatherDatabase? = null
 
-        fun getDatabase(appContext : Context, citiesLocalDataSource: ICitiesLocalDataSource) : WeatherDatabase{
+        fun getDatabase(appContext : Context, citiesLocalDataSource: ICitiesLoadDataSource) : WeatherDatabase{
             val tempInstance = INSTANCE
             if (tempInstance != null){
                 return tempInstance

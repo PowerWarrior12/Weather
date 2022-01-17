@@ -8,6 +8,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+private const val TIMEOUT : Long = 1000
+
 class RetrofitService {
 
     fun getRetrofit(url : String) : Retrofit{
@@ -20,7 +22,7 @@ class RetrofitService {
     }
 
     private fun getClient() = OkHttpClient.Builder()
-        .connectTimeout(1000, TimeUnit.SECONDS)
+        .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY// чтобы в логах отображалось
         })
