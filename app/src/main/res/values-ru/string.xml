@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Погода</string>
+    <string name="action_settings">Настройки</string>
+    <string name="date_text">Дата : </string>
+    <string name="min_temperature_text">Минимальная температура : </string>
+    <string name="max_temperature_text">Максимальная температура : </string>
+    <string name="humidity_text">Влажность : </string>
+    <string name="pressure_text">Давление : </string>
+    <string name="current_city_button">Подписаться</string>
+    <string name="degree">K°</string>
+    <string name="percent">%</string>
+    <string name="date_format">E
+yyyy-MM-dd</string>
+</resources>

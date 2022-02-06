@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Weather.TextViewLabel" parent="@style/Theme.Design.Light">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="Weather.TextViewValue" parent="@style/Theme.Design.Light">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="CardElement">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+</resources>
